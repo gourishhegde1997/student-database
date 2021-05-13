@@ -1,6 +1,7 @@
 package com.springPractice.studentdatabase;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -71,6 +72,7 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 		
 		// Deleting all the students
 		service.removeAllStudents();
+		
 	}
 
 	
