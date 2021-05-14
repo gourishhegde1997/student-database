@@ -1,23 +1,27 @@
 package com.springPractice.studentdatabase;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.core.env.Environment;
 
 import com.springPractice.studentdatabase.dto.AddressDTO;
 import com.springPractice.studentdatabase.dto.StudentDTO;
+import com.springPractice.studentdatabase.exceptions.StudentServiceException;
 import com.springPractice.studentdatabase.service.StudentService;
 
 
 @SpringBootApplication
+@PropertySource("classpath:messages.properties")
 public class StudentDatabaseApplication implements CommandLineRunner {
 	
 	@Autowired
@@ -25,6 +29,9 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 	
 	@Autowired
 	StudentService service;
+	
+	@Autowired
+	private Environment messages;
 	
 	private static final Logger logger = Logger.getLogger(StudentDatabaseApplication.class);
 	
@@ -38,6 +45,7 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 		logger.info("");
 		
 		// Performing CRUD operations
+		UUID id = UUID.randomUUID();
 		AddressDTO address = new AddressDTO(null, "@Uratota", "Karkisaval Post",
 				"#241, \"Janani\"", "Siddapura", "Karnataka", "India", 581355);
 		Date date = new SimpleDateFormat("dd-MM-yyyy").parse("23-12-1997");
@@ -49,8 +57,13 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 		StudentDTO student2 = new StudentDTO(null, "Cristiano Ronaldo", date2, 6338726539L, address2);
 		
 		// adding a student
-		student = service.addStudent(student);
-		student2 = service.addStudent(student2);
+		try {
+			student = service.addStudent(student);
+			student2 = service.addStudent(student2);
+		} catch (StudentServiceException ex) {
+			logger.error(messages.getProperty(ex.getMessage()), ex);
+		}
+		
 		logger.info("");
 		
 		// Retrieving all the students
@@ -63,7 +76,11 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 		logger.info("");
 		
 		// Retrieving Student by id
-		service.getStudentById(student2.getStudentId());
+		try {
+			service.getStudentById(id);
+		} catch (StudentServiceException ex) {
+			logger.error(messages.getProperty(ex.getMessage()), ex);
+		}
 		logger.info("");
 		
 		// Deleting the student

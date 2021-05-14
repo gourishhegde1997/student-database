@@ -2,6 +2,7 @@ package com.springPractice.studentdatabase.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.springPractice.studentdatabase.dto.StudentDTO;
 import com.springPractice.studentdatabase.entity.StudentEntity;
+import com.springPractice.studentdatabase.exceptions.StudentServiceException;
 import com.springPractice.studentdatabase.repository.StudentDAO;
 
 @Service
@@ -22,7 +24,7 @@ class StudentServiceImpl implements StudentService {
 	StudentDAO dao;
 
 	@Override
-	public StudentDTO addStudent(StudentDTO student) {
+	public StudentDTO addStudent(StudentDTO student) throws StudentServiceException {
 		logger.info("Adding student with data : " + student.toString());
 		StudentEntity studentEntity = dao.saveAndFlush(StudentDTO.getEntityObject(student));
 		return StudentEntity.getDtoObject(studentEntity);
@@ -50,13 +52,18 @@ class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public StudentDTO getStudentById(UUID id) {
+	public StudentDTO getStudentById(UUID id) throws StudentServiceException {
 		logger.info("Retrieving Student with student_id : "+id);
 		Optional<StudentEntity> optional = dao.findById(id);
-		StudentEntity studentEntity = optional.get();
-		StudentDTO student = StudentEntity.getDtoObject(studentEntity);
-		logger.info("Student retrieved : " + student.toString());
-		return student;
+		try {
+			StudentEntity studentEntity = optional.get();
+			StudentDTO student = StudentEntity.getDtoObject(studentEntity);
+			logger.info("Student retrieved : " + student.toString());
+			return student;
+		} catch (NoSuchElementException ex) {
+			throw new StudentServiceException("STUDENT_DOES_NOT_EXIST");
+		}
+		
 	}
 
 	@Override
