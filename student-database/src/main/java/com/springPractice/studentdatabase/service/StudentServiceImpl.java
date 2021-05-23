@@ -8,6 +8,9 @@ import java.util.UUID;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.springPractice.studentdatabase.dto.StudentDTO;
@@ -67,7 +70,7 @@ class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public void updateStudentContactNo(UUID id, Long phoneNumber) {
+	public void updateStudentContactNo(UUID id, String phoneNumber) {
 		logger.info("Updating Student with id : " + id);
 		Optional<StudentEntity> optional = dao.findById(id);
 		if (!optional.isEmpty()) {
@@ -80,6 +83,31 @@ class StudentServiceImpl implements StudentService {
 		}
 		
 		
+	}
+	
+	@Override
+	public List<StudentDTO> findAll(Sort sort) throws StudentServiceException {
+		List<StudentDTO> studentsSortedDto = new ArrayList<>();
+		Iterable<StudentEntity> studentsSorted = dao.findAll(sort);
+		for (StudentEntity studentEntity : studentsSorted) {
+			studentsSortedDto.add(StudentEntity.getDtoObject(studentEntity));
+		}
+		return studentsSortedDto;
+	}
+	
+	@Override
+	public List<StudentDTO> findAll(Pageable page) throws StudentServiceException {
+		List<StudentDTO> studentsListDto = new ArrayList<>();
+		Page<StudentEntity> studentsPage = dao.findAll(page);
+		for (StudentEntity student : studentsPage) {
+			studentsListDto.add(StudentEntity.getDtoObject(student));
+		}
+		return studentsListDto;
+	}
+	
+	@Override
+	public Long getStudentsCount() {
+		return dao.count();
 	}
 
 }

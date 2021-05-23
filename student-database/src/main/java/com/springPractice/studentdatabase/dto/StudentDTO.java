@@ -1,6 +1,6 @@
 package com.springPractice.studentdatabase.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import com.springPractice.studentdatabase.entity.StudentEntity;
@@ -9,8 +9,9 @@ public class StudentDTO {
 	
 	private UUID studentId;
 	private String studentName;
-	private Date dob;
-	private Long contactNumber;
+	private LocalDate dob;
+	private String contactNumber;
+	private String email;
 	private AddressDTO address;
 	
 	public UUID getStudentId() {
@@ -25,17 +26,23 @@ public class StudentDTO {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
-	public Long getContactNumber() {
+	public String getContactNumber() {
 		return contactNumber;
 	}
-	public void setContactNumber(Long contactNumber) {
+	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public AddressDTO getAddress() {
 		return address;
@@ -44,30 +51,30 @@ public class StudentDTO {
 		this.address = address;
 	}
 	
-	@Override
-	public String toString() {
-		return "StudentDTO [studentId=" + studentId + ", studentName=" + studentName + ", dob=" + dob
-				+ ", contactNumber=" + contactNumber + ", address=" + address + "]";
-	}
-	
-	public static StudentEntity getEntityObject(StudentDTO student) {
-		StudentEntity studentEntity = new StudentEntity();
-		studentEntity.setStudentId(student.getStudentId());
-		studentEntity.setStudentName(student.getStudentName());
-		studentEntity.setDob(student.getDob());
-		studentEntity.setContactNumber(student.getContactNumber());
-		studentEntity.setAddress(AddressDTO.getEntityObject(student.getAddress()));
-		return studentEntity;
-	}
-	
-	public StudentDTO(UUID studentId, String studentName, Date dob, Long contactNumber, AddressDTO address) {
+	public StudentDTO(UUID studentId, String studentName, LocalDate dob, String contactNumber, String email,
+			AddressDTO address) {
 		super();
 		this.studentId = studentId;
 		this.studentName = studentName;
 		this.dob = dob;
 		this.contactNumber = contactNumber;
+		this.email = email;
 		this.address = address;
 	}
 	
-	public StudentDTO() {}
+	public StudentDTO() {
+		super();
+	}
+	
+	@Override
+	public String toString() {
+		return "StudentDTO [studentId=" + studentId + ", studentName=" + studentName + ", dob=" + dob
+				+ ", contactNumber=" + contactNumber + ", email=" + email + ", address=" + address + "]";
+	}
+	
+	public static StudentEntity getEntityObject(StudentDTO student) {
+		return new StudentEntity(student.getStudentId(), student.getStudentName(),
+				student.getDob(), student.getContactNumber(),
+				student.getEmail(), AddressDTO.getEntityObject(student.getAddress()));
+	}
 }

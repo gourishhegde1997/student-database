@@ -1,19 +1,18 @@
 package com.springPractice.studentdatabase.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.springPractice.studentdatabase.dto.StudentDTO;
 
@@ -29,13 +28,15 @@ public class StudentEntity {
 	@Column(name = "student_name")
 	private String studentName;
 	
-	@Temporal(value = TemporalType.DATE)
-	private Date dob;
+	private LocalDate dob;
 	
 	@Column(name = "contact_no")
-	private Long contactNumber;
+	private String contactNumber;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@Column
+	private String email;
+	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "address_id", unique = true)
 	private AddressEntity address;
 
@@ -55,22 +56,30 @@ public class StudentEntity {
 		this.studentName = studentName;
 	}
 
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 
-	public Long getContactNumber() {
+	public String getContactNumber() {
 		return contactNumber;
 	}
 
-	public void setContactNumber(Long contactNumber) {
-		this.contactNumber = contactNumber;
+	public void setContactNumber(String phoneNumber) {
+		this.contactNumber = phoneNumber;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public AddressEntity getAddress() {
 		return address;
 	}
@@ -78,26 +87,25 @@ public class StudentEntity {
 	public void setAddress(AddressEntity address) {
 		this.address = address;
 	}
-	
-	public static StudentDTO getDtoObject(StudentEntity studentEntity) {
-		StudentDTO student = new StudentDTO();
-		student.setStudentId(studentEntity.getStudentId());
-		student.setStudentName(studentEntity.getStudentName());
-		student.setDob(studentEntity.getDob());
-		student.setContactNumber(studentEntity.getContactNumber());
-		student.setAddress(AddressEntity.getDtoObject(studentEntity.getAddress()));
-		return student;
-	}
-	
-	public StudentEntity() {}
 
-	public StudentEntity(UUID studentId, String studentName, Date dob, Long contactNumber, AddressEntity address) {
+	public static StudentDTO getDtoObject(StudentEntity student) {
+		return new StudentDTO(student.getStudentId(), student.getStudentName(), student.getDob(),
+				student.getContactNumber(), student.getEmail(), AddressEntity.getDtoObject(student.getAddress()));
+	}
+
+	public StudentEntity(UUID studentId, String studentName, LocalDate dob, String contactNumber, String email,
+			AddressEntity address) {
 		super();
 		this.studentId = studentId;
 		this.studentName = studentName;
 		this.dob = dob;
 		this.contactNumber = contactNumber;
+		this.email = email;
 		this.address = address;
+	}
+
+	public StudentEntity() {
+		super();
 	}
 	
 }

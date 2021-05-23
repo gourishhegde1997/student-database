@@ -22,16 +22,8 @@ public class AddressEntity {
 	@GeneratedValue
 	private UUID addressId;
 	
-	@Column(name = "address_lane_1")
-	private String addressLane1;
-	
-	@Column(name = "address_lane_2")
-	private String addressLane2;
-	
-	private String landmark;
-	private String city;
-	private String state;
-	private String country;
+	@Column(name = "address_details")
+	private String addressDetails;
 	
 	@Column(name = "postal_code")
 	private Integer postalCode;
@@ -44,52 +36,12 @@ public class AddressEntity {
 		this.addressId = addressId;
 	}
 
-	public String getAddressLane1() {
-		return addressLane1;
+	public String getAddressDetails() {
+		return addressDetails;
 	}
 
-	public void setAddressLane1(String addressLane1) {
-		this.addressLane1 = addressLane1;
-	}
-
-	public String getAddressLane2() {
-		return addressLane2;
-	}
-
-	public void setAddressLane2(String addressLane2) {
-		this.addressLane2 = addressLane2;
-	}
-
-	public String getLandmark() {
-		return landmark;
-	}
-
-	public void setLandmark(String landmark) {
-		this.landmark = landmark;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
+	public void setAddressDetails(String addressDetails) {
+		this.addressDetails = addressDetails;
 	}
 
 	public Integer getPostalCode() {
@@ -100,11 +52,19 @@ public class AddressEntity {
 		this.postalCode = postalCode;
 	}
 	
-	public static AddressDTO getDtoObject(AddressEntity addressEntity) {
-		AddressDTO address = new AddressDTO(
-				addressEntity.getAddressId(), addressEntity.getAddressLane1(), addressEntity.getAddressLane2(), 
-				addressEntity.getLandmark(), addressEntity.getCity(), addressEntity.getState(), 
-				addressEntity.getCountry(), addressEntity.getPostalCode());
-		return address;
+	public static AddressDTO getDtoObject(AddressEntity address) {
+		return new AddressDTO(address.getAddressId(), address.getAddressDetails(), address.getPostalCode());
 	}
+
+	public AddressEntity(UUID addressId, String addressDetails, Integer postalCode) {
+		super();
+		this.addressId = addressId;
+		this.addressDetails = addressDetails;
+		this.postalCode = postalCode;
+	}
+
+	public AddressEntity() {
+		super();
+	}
+	
 }
