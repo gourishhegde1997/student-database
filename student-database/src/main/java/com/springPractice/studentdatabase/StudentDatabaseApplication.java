@@ -42,24 +42,23 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		logger.info("");
-
-		// Performing CRUD operations
-		AddressDTO address = new AddressDTO(null, "@Uratota,Karkisaval Post, Siddapura", 581355);
-		LocalDate date = LocalDate.of(1997, Month.DECEMBER, 23);
-		StudentDTO student = new StudentDTO(null, "Gourisha Hegde", date, "9538606818", "gourisha.hegde@infosys.com", address);
-
-
-		// adding a student
-		try {
-			student = service.addStudent(student);
-		} catch (StudentServiceException ex) {
-			logger.error(messages.getProperty(ex.getMessage()), ex);
-		}
-
-		logger.info("");
-
-//		// Retrieving all the students
-		List<StudentDTO> studentList = service.listAllStudents();
+//
+//		// Performing CRUD operations
+//		AddressDTO address = new AddressDTO(null, "@Uratota,Karkisaval Post, Siddapura", 581355);
+//		LocalDate date = LocalDate.of(1997, Month.DECEMBER, 23);
+//		StudentDTO student = new StudentDTO(null, "Gourisha Hegde", date, "9538606818", "gourisha.hegde@infosys.com", address);
+//
+//		// adding a student
+//		try {
+//			student = service.addStudent(student);
+//		} catch (StudentServiceException ex) {
+//			logger.error(messages.getProperty(ex.getMessage()), ex);
+//		}
+//
+//		logger.info("");
+//
+		// Retrieving all the students
+		List<StudentDTO> studentList = service.findByStudentName("Gourisha Hegde");
 		studentList.forEach(c -> logger.info("Student(s) available is/are : " + c.toString()));
 		logger.info("");
 //

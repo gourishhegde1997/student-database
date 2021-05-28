@@ -31,4 +31,6 @@ public interface StudentService {
 
 	public Long getStudentsCount();
 
+	public List<StudentDTO> findByStudentName(String studentName);
+
 }

@@ -109,5 +109,15 @@ class StudentServiceImpl implements StudentService {
 	public Long getStudentsCount() {
 		return dao.count();
 	}
+	
+	@Override
+	public List<StudentDTO> findByStudentName(String studentName) {
+		List<StudentDTO> studentsListDto = new ArrayList<>();
+		List<StudentEntity> studentsPage = dao.findByStudentName(studentName);
+		for (StudentEntity student : studentsPage) {
+			studentsListDto.add(StudentEntity.getDtoObject(student));
+		}
+		return studentsListDto;
+	}
 
 }

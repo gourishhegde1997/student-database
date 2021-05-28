@@ -28,7 +28,7 @@ public class StudentController {
 	@GetMapping(path = "/getstudent") 
 	public ResponseEntity<List<StudentDTO>> getAllStudents() {
 		List<StudentDTO> studentsList = service.listAllStudents();
-		return new ResponseEntity<List<StudentDTO>>(studentsList, HttpStatus.OK);
+		return new ResponseEntity<>(studentsList, HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/getstudent/{studentId}") 
@@ -39,7 +39,7 @@ public class StudentController {
 			return new ResponseEntity<StudentDTO>(student, HttpStatus.OK);
 		} catch (StudentServiceException e) {
 			e.printStackTrace();
-			return new ResponseEntity<StudentDTO>(new StudentDTO(), HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		
 	}
