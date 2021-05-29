@@ -13,24 +13,27 @@ import com.springPractice.studentdatabase.exceptions.StudentServiceException;
 public interface StudentService {
 	
 	// method to add a student into db
-	public StudentDTO addStudent(StudentDTO student) throws StudentServiceException;
+	StudentDTO addStudent(StudentDTO student) throws StudentServiceException;
 	
-	public List<StudentDTO> listAllStudents();
+	List<StudentDTO> listAllStudents();
 	
-	public void removeStudent(StudentDTO student);
+	void removeStudent(StudentDTO student);
 	
-	public void removeAllStudents();
+	void removeAllStudents();
 	
-	public StudentDTO getStudentById(UUID id) throws StudentServiceException;
+	StudentDTO getStudentById(UUID id) throws StudentServiceException;
 	
-	public void updateStudentContactNo(UUID id, String phoneNumber);
+	void updateStudentContactNo(UUID id, String phoneNumber);
 
-	public List<StudentDTO> findAll(Sort sort) throws StudentServiceException;
+	List<StudentDTO> findAll(Sort sort) throws StudentServiceException;
 
-	public List<StudentDTO> findAll(Pageable page) throws StudentServiceException;
+	List<StudentDTO> findAll(Pageable page) throws StudentServiceException;
 
-	public Long getStudentsCount();
+	Long getStudentsCount();
 
-	public List<StudentDTO> findByStudentName(String studentName);
+	List<StudentDTO> findByStudentName(String studentName);
 
+	List<StudentDTO> findByContactNumber(String contactNumber);
+
+	List<StudentDTO> findByEmailAndName(String email, String studentName);
 }
