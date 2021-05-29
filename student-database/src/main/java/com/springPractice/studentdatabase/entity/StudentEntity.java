@@ -19,23 +19,23 @@ import com.springPractice.studentdatabase.dto.StudentDTO;
 @Entity
 @Table(name = "student", schema = "student_db")
 public class StudentEntity {
-	
+
 	@Id
 	@Column(name = "student_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID studentId;
-	
+
 	@Column(name = "student_name")
 	private String studentName;
-	
+
 	private LocalDate dob;
-	
+
 	@Column(name = "contact_no")
 	private String contactNumber;
-	
+
 	@Column
 	private String email;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "address_id", unique = true)
 	private AddressEntity address;
@@ -79,7 +79,7 @@ public class StudentEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public AddressEntity getAddress() {
 		return address;
 	}
@@ -107,5 +107,5 @@ public class StudentEntity {
 	public StudentEntity() {
 		super();
 	}
-	
+
 }
