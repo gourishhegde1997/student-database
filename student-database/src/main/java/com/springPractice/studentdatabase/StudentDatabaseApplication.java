@@ -1,10 +1,7 @@
 package com.springPractice.studentdatabase;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
-
+import com.springPractice.studentdatabase.dto.StudentDTO;
+import com.springPractice.studentdatabase.service.StudentService;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,34 +11,31 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
-import com.springPractice.studentdatabase.dto.AddressDTO;
-import com.springPractice.studentdatabase.dto.StudentDTO;
-import com.springPractice.studentdatabase.exceptions.StudentServiceException;
-import com.springPractice.studentdatabase.service.StudentService;
+import java.util.List;
 
 @SpringBootApplication
 @PropertySource("classpath:messages.properties")
 public class StudentDatabaseApplication implements CommandLineRunner {
 
-	@Autowired
-	ApplicationContext context;
+    @Autowired
+    ApplicationContext context;
 
-	@Autowired
-	StudentService service;
+    @Autowired
+    StudentService service;
 
-	@Autowired
-	private Environment messages;
+    @Autowired
+    private Environment messages;
 
-	private static final Logger logger = Logger.getLogger(StudentDatabaseApplication.class);
+    private static final Logger logger = Logger.getLogger(StudentDatabaseApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(StudentDatabaseApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(StudentDatabaseApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
+    @Override
+    public void run(String... args) throws Exception {
 
-		logger.info("");
+        logger.info("");
 //
 //		// Performing CRUD operations
 //		AddressDTO address = new AddressDTO(null, "@Uratota,Karkisaval Post, Siddapura", 581355);
@@ -57,10 +51,10 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 //
 //		logger.info("");
 //
-		// Retrieving all the students
-		List<StudentDTO> studentList = service.findByStudentName("Gourisha Hegde");
-		studentList.forEach(c -> logger.info("Student(s) available is/are : " + c.toString()));
-		logger.info("");
+        // Retrieving all the students
+        List<StudentDTO> studentList = service.findByEmailAndName("gourisha.hegde@infosys.com", "Gourisha Hegde");
+        studentList.forEach(c -> logger.info("Student(s) available is/are : " + c.toString()));
+        logger.info("");
 //
 //		// updating student contact number
 //		service.updateStudentContactNo(student2.getStudentId(), 8338726539L);
@@ -100,6 +94,6 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 //		// Deleting all the students
 //		service.removeAllStudents();
 
-	}
+    }
 
 }
