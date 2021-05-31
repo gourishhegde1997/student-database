@@ -12,6 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootApplication
 @PropertySource("classpath:messages.properties")
@@ -36,6 +37,7 @@ public class StudentDatabaseApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         logger.info("");
+//        UUID id = UUID.fromString("4a9f5280-b013-47cc-ab20-dea02d8c4d0e");
 //
 //		// Performing CRUD operations
 //		AddressDTO address = new AddressDTO(null, "@Uratota,Karkisaval Post, Siddapura", 581355);
@@ -49,16 +51,18 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 //			logger.error(messages.getProperty(ex.getMessage()), ex);
 //		}
 //
+//        StudentDTO student = service.findByEmailAndName("radhika.hegde@infosys.com", "Radhika Hegde").get(0);
+//        service.updateStudentEmail("radhika.hegde@gmail.com", student.getStudentId());
 //		logger.info("");
-//
+
         // Retrieving all the students
         List<StudentDTO> studentList = service.findByEmailAndName("gourisha.hegde@infosys.com", "Gourisha Hegde");
         studentList.forEach(c -> logger.info("Student(s) available is/are : " + c.toString()));
         logger.info("");
-//
-//		// updating student contact number
-//		service.updateStudentContactNo(student2.getStudentId(), 8338726539L);
-//		logger.info("");
+
+		// check whether a student exist or not
+        logger.info("Students' existence status : " + service.checkIfStudentExists("Gourisha Hegde", "gourisha.hegde@infosys.com", "9538606818"));
+		logger.info("");
 //
 //		// getting students in a page
 //		Long studentsCount = service.getStudentsCount();

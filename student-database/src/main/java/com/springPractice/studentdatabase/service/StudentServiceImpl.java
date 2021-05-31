@@ -135,4 +135,13 @@ class StudentServiceImpl implements StudentService {
         return studentsList;
     }
 
+    @Override
+    public void updateStudentEmail(String email, UUID studentId) {
+        dao.updateStudentEmail(email, studentId);
+    }
+
+    @Override
+    public boolean checkIfStudentExists(String studentName, String email, String contactNum) {
+        return dao.checkStudentExists(studentName, email, contactNum);
+    }
 }

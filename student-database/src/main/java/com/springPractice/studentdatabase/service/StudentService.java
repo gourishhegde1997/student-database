@@ -36,4 +36,8 @@ public interface StudentService {
 	List<StudentDTO> findByContactNumber(String contactNumber);
 
 	List<StudentDTO> findByEmailAndName(String email, String studentName);
+
+	void updateStudentEmail(String email, UUID studentId);
+
+	boolean checkIfStudentExists(String studentName, String email, String contactNum);
 }
