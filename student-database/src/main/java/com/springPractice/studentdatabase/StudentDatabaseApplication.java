@@ -42,7 +42,7 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 //		// Performing CRUD operations
 //		AddressDTO address = new AddressDTO(null, "@Uratota,Karkisaval Post, Siddapura", 581355);
 //		LocalDate date = LocalDate.of(1997, Month.DECEMBER, 23);
-//		StudentDTO student = new StudentDTO(null, "Gourisha Hegde", date, "9538606818", "gourisha.hegde@infosys.com", address);
+//		StudentDTO student = new StudentDTO(null, "Gourisha Hegde", date, "9538606818", "gourisha.hegde@gmail.com", address);
 //
 //		// adding a student
 //		try {
@@ -51,17 +51,17 @@ public class StudentDatabaseApplication implements CommandLineRunner {
 //			logger.error(messages.getProperty(ex.getMessage()), ex);
 //		}
 //
-//        StudentDTO student = service.findByEmailAndName("radhika.hegde@infosys.com", "Radhika Hegde").get(0);
+//        StudentDTO student = service.findByEmailAndName("radhika.hegde@gmail.com", "Radhika Hegde").get(0);
 //        service.updateStudentEmail("radhika.hegde@gmail.com", student.getStudentId());
 //		logger.info("");
 
         // Retrieving all the students
-        List<StudentDTO> studentList = service.findByEmailAndName("gourisha.hegde@infosys.com", "Gourisha Hegde");
+        List<StudentDTO> studentList = service.findByEmailAndName("gourisha.hegde@gmail.com", "Gourisha Hegde");
         studentList.forEach(c -> logger.info("Student(s) available is/are : " + c.toString()));
         logger.info("");
 
 		// check whether a student exist or not
-        logger.info("Students' existence status : " + service.checkIfStudentExists("Gourisha Hegde", "gourisha.hegde@infosys.com", "9538606818"));
+        logger.info("Students' existence status : " + service.checkIfStudentExists("Gourisha Hegde", "gourisha.hegde@gmail.com", "9538606818"));
 		logger.info("");
 //
 //		// getting students in a page
